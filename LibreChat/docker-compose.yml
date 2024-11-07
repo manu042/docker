@@ -1,0 +1,47 @@
+version: "3.4"
+
+
+services:
+  api:
+    image: ghcr.io/danny-avila/librechat-dev:latest
+    env_file:
+      - .env
+    environment:
+      - HOST=0.0.0.0
+      - MONGO_URI=mongodb://mongodb:27017/LibreChat
+      - MEILI_HOST=http://meilisearch:7700
+      - VIRTUAL_HOST=${DOMAIN_NAME}
+      - LETSENCRYPT_HOST=${DOMAIN_NAME}
+      - VIRTUAL_PORT=3080
+    volumes:
+      - images:/app/client/public/images
+      - logs:/app/api/logs
+    depends_on:
+      - mongodb
+    user: "${UID}:${GID}"
+    restart: unless-stopped
+    container_name: LibreChat
+
+  mongodb:
+    image: mongo
+    volumes:
+      - database:/data/db
+    user: "${UID}:${GID}"
+    restart: unless-stopped
+    container_name: chat-mongodb
+    command: mongod --noauth
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.7.3
+    environment:
+      - MEILI_HOST=http://meilisearch:7700
+      - MEILI_NO_ANALYTICS=true
+    user: "${UID}:${GID}"
+    container_name: chat-meilisearch
+    restart: unless-stopped
+
+
+volumes:
+  images:
+  logs:
+  database:
