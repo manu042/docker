@@ -13,9 +13,9 @@ services:
       - VIRTUAL_HOST=${DOMAIN_NAME}
       - LETSENCRYPT_HOST=${DOMAIN_NAME}
       - VIRTUAL_PORT=3080
-    volumes:
-      - images:/app/client/public/images
-      - logs:/app/api/logs
+    networks:
+      - proxy
+      - backend
     depends_on:
       - mongodb
     user: "${UID}:${GID}"
@@ -26,6 +26,8 @@ services:
     image: mongo
     volumes:
       - database:/data/db
+    networks:
+      - backend
     user: "${UID}:${GID}"
     restart: unless-stopped
     container_name: chat-mongodb
@@ -36,12 +38,21 @@ services:
     environment:
       - MEILI_HOST=http://meilisearch:7700
       - MEILI_NO_ANALYTICS=true
+    networks:
+      - backend
     user: "${UID}:${GID}"
     container_name: chat-meilisearch
     restart: unless-stopped
 
 
 volumes:
-  images:
-  logs:
   database:
+
+
+networks:
+  proxy:
+    external: true
+    name: proxy-network
+  backend:
+    external: false
+    name: librechat-backend
