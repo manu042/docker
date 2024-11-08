@@ -6,19 +6,11 @@ LibreChat is a chatbot interface for the OpenAI API.
 
 
 ## Setup
-1. Start services
+1. Create and edit `.env` file
+2. (Generate Credentials)[https://www.librechat.ai/toolkit/creds_generator] and add them to the `.env` file
+3. Start services
 ```
 docker-compose up -d
-```
-
-2. Add LibreChat container to bridge network
-```
-docker network connect bridge LibreChat
-```
-
-3. Restart nginx-proxy container
-```
-docker restart nginx-proxy
 ```
 
 
