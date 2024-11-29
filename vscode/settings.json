@@ -1,0 +1,30 @@
+{
+    "telemetry.telemetryLevel": "off",
+
+    // Only way to increase font size in the workbench.tree is to zoom in,
+    // it may be necessary to adjust the font size
+    "window.zoomLevel": 0.1,
+    "editor.fontSize": 14,
+    "terminal.integrated.fontSize": 14,
+
+    "workbench.tree.indent": 30,
+    "workbench.tree.renderIndentGuides": "always" ,
+    "workbench.colorTheme": "Default Light+",
+
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    
+    "editor.bracketPairColorization.enabled": true,
+    
+    "editor.tokenColorCustomizations": {
+        "[Default Light+]": {
+            "comments": "#0a0755"
+        }
+    },
+    
+    "workbench.colorCustomizations": {
+        "[Default Light+]": {
+            "editorLineNumber.foreground": "#21d9e6"
+        }
+    }
+}
