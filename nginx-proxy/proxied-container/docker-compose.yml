@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx
+    environment:
+      - VIRTUAL_HOST=${DOMAIN_NAME}
+      - LETSENCRYPT_HOST=${DOMAIN_NAME}
+    network_mode: bridge
+    container_name: nginx
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge
