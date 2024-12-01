@@ -1,15 +1,20 @@
 # Hetzner
 
+https://community.hetzner.com/tutorials/basic-cloud-config/de
+
 Cloud config:
 ```yaml
 #cloud-config
+users:
+  - name: holu
+    groups: users, admin
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - <public_ssh_key>
+
 packages:
   - zsh
-  - docker.io
-  - docker-compose
 package_update: true
 package_upgrade: true
-runcmd:
-    - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    - reboot
 ```
