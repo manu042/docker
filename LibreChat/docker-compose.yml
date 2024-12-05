@@ -1,6 +1,3 @@
-version: "3.4"
-
-
 services:
   api:
     image: ghcr.io/danny-avila/librechat-dev-api:latest
@@ -24,7 +21,7 @@ services:
       - rag_api
     user: "${UID}:${GID}"
     restart: unless-stopped
-    container_name: libre_chat
+    container_name: librechat
 
   mongodb:
     image: mongo
@@ -37,7 +34,7 @@ services:
       - backend
     user: "${UID}:${GID}"
     restart: unless-stopped
-    container_name: chat-mongodb
+    container_name: lc-mongodb
     command: mongod --noauth
 
   meilisearch:
@@ -49,7 +46,7 @@ services:
     networks:
       - backend
     user: "${UID}:${GID}"
-    container_name: chat-meilisearch
+    container_name: lc-meilisearch
     restart: unless-stopped
 
   vectordb:
