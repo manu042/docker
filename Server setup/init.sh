@@ -37,6 +37,7 @@ function update_ssh_config {
     sudo sed -i -e "/^#\?$1/s/^.*$/$1 $2/" "$SSH_CONFIG"
 }
 
+update_ssh_config "PermitRootLogin" "no"
 update_ssh_config "PasswordAuthentication" "no"
 update_ssh_config "MaxAuthTries" "3"
 update_ssh_config "LoginGraceTime" "60"
@@ -49,8 +50,5 @@ update_ssh_config "GSSAPIAuthentication" "no"
 
 echo "Restarting SSH service to apply changes."
 sudo systemctl restart sshd
-
-echo "=== Installing Oh My Zsh ==="
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 echo "=== Script execution completed successfully ==="
