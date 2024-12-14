@@ -25,9 +25,6 @@ services:
 
   mongodb:
     image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: username
-      MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - mongodb:/data/db
     networks:
@@ -50,7 +47,7 @@ services:
     restart: unless-stopped
 
   vectordb:
-    image: pgvector/pgvector:latest
+    image: ankane/pgvector:latest
     environment:
       POSTGRES_DB: file_embeddings_db
       POSTGRES_USER: username
