@@ -21,3 +21,19 @@ Then start the nginx-proxy with docker compose:
 ```shell
 docker compose up -d
 ```
+
+
+## Basic Authentication Support
+To add Basic Authentication create a file named as its equivalent VIRTUAL_HOST in directory `/etc/nginx/htpasswd/{$VIRTUAL_HOST}` and restart `nginx` and `dockergen`.
+
+1. Install `apache2-utils`:
+```shell
+sudo apt-get install --dry-run apache2-utils
+```
+
+2. Create a new username and password entry for your `{$VIRTUAL_HOST}` e.g. example.com:
+```shell
+sudo htpasswd -c -B /etc/nginx/htpasswd/example.com username
+```
+
+For more information see [Basic Authentication Support](https://github.com/nginx-proxy/nginx-proxy/tree/main/docs#basic-authentication-support)
