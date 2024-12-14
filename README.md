@@ -37,3 +37,17 @@ $ docker history [image_name:tag]
 
 $ docker history lscr.io/linuxserver/code-server:latest --format "table{{.CreatedBy}}\t{{.Size}}"
 ```
+
+
+## Docker Log Rotation
+Add this to `/etc/docker/daemon.json` to configure the Docker daemon to use log rotation by default.
+
+```Json
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3",
+  }
+}
+```
