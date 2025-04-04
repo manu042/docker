@@ -19,7 +19,6 @@ services:
     depends_on:
       - mongodb
       - rag_api
-    user: "${UID}:${GID}"
     restart: unless-stopped
     container_name: librechat
 
@@ -29,7 +28,6 @@ services:
       - mongodb:/data/db
     networks:
       - backend
-    user: "${UID}:${GID}"
     restart: unless-stopped
     container_name: lc-mongodb
     command: mongod --noauth
@@ -42,7 +40,6 @@ services:
       - meili_data:/meili_data
     networks:
       - backend
-    user: "${UID}:${GID}"
     container_name: lc-meilisearch
     restart: unless-stopped
 
