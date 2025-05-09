@@ -33,7 +33,7 @@ services:
     command: mongod --noauth
 
   meilisearch:
-    image: getmeili/meilisearch:v1.7.3
+    image: getmeili/meilisearch:v1.12.3
     env_file:
       - ./config/.env.meilisearch
     volumes:
