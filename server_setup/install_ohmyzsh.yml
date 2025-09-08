@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - role: ohmyzsh
+      vars:
+        ohmyzsh_theme: bira
+        ohmyzsh_plugins:
+          - git
+          - docker
