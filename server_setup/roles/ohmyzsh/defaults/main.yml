@@ -1,0 +1,5 @@
+---
+ohmyzsh_user: "{{ ansible_user }}"
+ohmyzsh_theme: "robbyrussell"
+ohmyzsh_plugins:
+  - git

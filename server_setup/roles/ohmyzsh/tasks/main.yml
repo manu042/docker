@@ -1,0 +1,27 @@
+---
+- name: Install zsh
+  ansible.builtin.package:
+    name: zsh
+    state: present
+  become: true
+
+- name: Set user shell to zsh
+  ansible.builtin.user:
+    name: "{{ ohmyzsh_user }}"
+    shell: /bin/zsh
+  become: true
+
+- name: Clone oh-my-zsh repository
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: "/home/{{ ohmyzsh_user }}/.oh-my-zsh"
+    version: master
+
+- name: Deploy .zshrc configuration
+  ansible.builtin.template:
+    src: zshrc.j2
+    dest: "/home/{{ ohmyzsh_user }}/.zshrc"
+    force: false
+    owner: "{{ ohmyzsh_user }}"
+    group: "{{ ohmyzsh_user }}"
+    mode: "0644"
