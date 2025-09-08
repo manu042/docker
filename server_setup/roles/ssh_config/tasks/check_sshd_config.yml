@@ -1,0 +1,9 @@
+---
+- name: Get effective sshd config
+  command: sshd -T
+  register: sshd_config
+
+- name: Show relevant sshd settings
+  debug:
+    msg: "{{ item }}"
+  loop: "{{ sshd_config.stdout_lines | select('match', '^(permitrootlogin|passwordauthentication|permitemptypasswords)') | list }}"

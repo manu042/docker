@@ -1,0 +1,19 @@
+---
+ssh_config_file: /etc/ssh/sshd_config
+ssh_backup_file: /etc/ssh/sshd_config.bak
+
+ssh_settings:
+  - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
+  - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
+  - { regexp: '^#?X11Forwarding', line: 'X11Forwarding no' }
+  - { regexp: '^#?PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
+  - { regexp: '^#?ChallengeResponseAuthentication', line: 'ChallengeResponseAuthentication no' }
+  - { regexp: '^#?MaxAuthTries', line: 'MaxAuthTries 3' }
+  - { regexp: '^#?LoginGraceTime', line: 'LoginGraceTime 60' }
+  - { regexp: '^#?AllowAgentForwarding', line: 'AllowAgentForwarding no' }
+  - { regexp: '^#?KbdInteractiveAuthentication', line: 'KbdInteractiveAuthentication no' }
+  - { regexp: '^#?KerberosAuthentication', line: 'KerberosAuthentication no' }
+  - { regexp: '^#?GSSAPIAuthentication', line: 'GSSAPIAuthentication no' }
+  - { regexp: '^#?UsePAM', line: 'UsePAM yes' }
+  - { regexp: '^#?ClientAliveInterval', line: 'ClientAliveInterval 300' }
+  - { regexp: '^#?ClientAliveCountMax', line: 'ClientAliveCountMax 2' }
