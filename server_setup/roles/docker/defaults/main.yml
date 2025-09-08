@@ -1,0 +1,9 @@
+---
+docker_log_driver: "json-file"
+docker_log_max_size: "10m"
+docker_log_max_file: "3"
+docker_cgroup_driver: "systemd"
+docker_storage_driver: "overlay2"
+docker_live_restore: true
+docker_iptables: true
+docker_ipv6: false

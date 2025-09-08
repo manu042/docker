@@ -1,0 +1,12 @@
+{
+    "log-driver": "{{ docker_log_driver }}",
+    "log-opts": {
+        "max-size": "{{ docker_log_max_size }}",
+        "max-file": "{{ docker_log_max_file }}"
+    },
+    "exec-opts": ["native.cgroupdriver=systemd"],
+    "storage-driver": "overlay2",
+    "live-restore": {{ docker_live_restore | lower }},
+    "iptables": {{ docker_iptables| lower }},
+    "ipv6": {{ docker_ipv6 | lower }}
+}
