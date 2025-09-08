@@ -50,7 +50,7 @@ services:
       - backend
 
   rag-api:
-    image: '{{ images.rag-api }}'
+    image: '{{ images.rag_api }}'
     container_name: lc-rag-api
     restart: unless-stopped
     env_file:
