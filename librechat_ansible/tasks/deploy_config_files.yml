@@ -1,0 +1,30 @@
+---
+- name: Copy .env.librechat file
+  ansible.builtin.copy:
+    src: .env.librechat
+    dest: '{{ project_dir }}/.env.librechat'
+    mode: '0600'
+
+- name: Deploy .env.librechat file
+  ansible.builtin.template:
+    src: .env.librechat
+    dest: '{{ project_dir }}/.env.librechat'
+    mode: '0600'
+
+- name: Deploy .env.mlsearch file
+  ansible.builtin.template:
+    src: .env.librechat
+    dest: '{{ project_dir }}/.env.mlsearch'
+    mode: '0600'
+
+- name: Deploy .env.rag_api file
+  ansible.builtin.template:
+    src: .env.librechat
+    dest: '{{ project_dir }}/.env.rag_api'
+    mode: '0600'
+
+- name: Deploy .env.vdb file
+  ansible.builtin.template:
+    src: .env.vdb
+    dest: '{{ project_dir }}/.env.vdb'
+    mode: '0600'

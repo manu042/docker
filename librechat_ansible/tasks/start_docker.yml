@@ -1,0 +1,11 @@
+---
+- name: Start Services
+  community.docker.docker_compose_v2:
+    project_src: '{{ project_dir }}'
+    remove_orphans: true
+    state: present
+  register: compose_result
+
+- name: Show docker compose result
+  ansible.builtin.debug:
+    var: compose_output.stdout
