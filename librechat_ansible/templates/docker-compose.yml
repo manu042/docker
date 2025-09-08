@@ -1,0 +1,75 @@
+name: "librechat"
+
+services:
+  api:
+    image: '{{ images.librechat }}'
+    container_name: librechat 
+    restart: unless-stopped
+    env_file:
+      - ./config/.env.librechat
+    volumes:
+      - ./config/librechat.yaml:/app/librechat.yaml:ro
+      - images:/app/client/public/images
+    networks:
+      - proxy
+      - backend
+    depends_on:
+      - mongodb
+      - rag-api
+
+  mongodb:
+    image: '{{ images.mongodb }}'
+    container_name: lc-mongodb
+    restart: unless-stopped
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - backend
+    command: mongod --noauth
+
+  meilisearch:
+    image: '{{ images.meilisearch }}'
+    container_name: lc-meilisearch
+    restart: unless-stopped
+    env_file:
+      - ./config/.env.mlsearch
+    volumes:
+      - meili_data:/meili_data
+    networks:
+      - backend
+
+  vectordb:
+    image: '{{ images.vectordb }}'
+    restart: unless-stopped
+    container_name: lc-vectordb
+    env_file:
+      - ./config/.env.vdb
+    volumes:
+        - pgdata2:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  rag-api:
+    image: '{{ images.rag-api }}'
+    container_name: lc-rag-api
+    restart: unless-stopped
+    env_file:
+      - ./config/.env.rag_api
+    depends_on:
+      - vectordb
+    networks:
+      - backend
+
+volumes:
+  images:
+  mongodb:
+  meili_data:
+  pgdata2:
+
+networks:
+  proxy:
+    external: true
+    name: proxy
+  backend:
+    external: false
+    name: librechat-backend
