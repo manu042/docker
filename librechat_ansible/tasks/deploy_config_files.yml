@@ -5,21 +5,21 @@
     dest: '{{ project_dir }}/.env.librechat'
     mode: '0600'
 
-- name: Deploy .env.librechat file
+- name: Deploy .env.librechat.ovr file
   ansible.builtin.template:
-    src: .env.librechat
-    dest: '{{ project_dir }}/.env.librechat'
+    src: .env.librechat.ovr
+    dest: '{{ project_dir }}/.env.librechat.ovr'
     mode: '0600'
 
 - name: Deploy .env.mlsearch file
   ansible.builtin.template:
-    src: .env.librechat
+    src: .env.mlsearch
     dest: '{{ project_dir }}/.env.mlsearch'
     mode: '0600'
 
 - name: Deploy .env.rag_api file
   ansible.builtin.template:
-    src: .env.librechat
+    src: .env.rag_api
     dest: '{{ project_dir }}/.env.rag_api'
     mode: '0600'
 
@@ -27,4 +27,16 @@
   ansible.builtin.template:
     src: .env.vdb
     dest: '{{ project_dir }}/.env.vdb'
+    mode: '0600'
+
+- name: Deploy docker-compose.yml file
+  ansible.builtin.template:
+    src: docker-compose.yml
+    dest: '{{ project_dir }}/docker-compose.yml'
+    mode: '0600'
+
+- name: Deploy librechat.yml file
+  ansible.builtin.template:
+    src: librechat.yml
+    dest: '{{ project_dir }}/librechat.yml'
     mode: '0600'
