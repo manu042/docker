@@ -1,0 +1,9 @@
+---
+project_dir: '/home/{{ ansible_user }}/librechat'
+
+images:
+  librechat: ghcr.io/danny-avila/librechat-dev-api:latest
+  mongodb: mongo
+  meilisearch: getmeili/meilisearch:v1.12.3
+  vectordb: pgvector/pgvector:0.8.0-pg15-trixie
+  rag_api: ghcr.io/danny-avila/librechat-rag-api-dev-lite:latest
