@@ -2,7 +2,7 @@
 # https://www.librechat.ai/docs/configuration/librechat_yaml
 
 # Configuration version (required)
-version: 1.2.1
+version: 1.2.8
 
 # Cache settings: Set to true to enable caching
 cache: false
@@ -11,9 +11,10 @@ endpoints:
   custom:
     # OpenRouter
     - name: "OpenRouter"
-      apiKey: '{{ openrouter_api_key }}'
+      apiKey: "{{ openrouter_api_key }}"
       baseURL: "https://openrouter.ai/api/v1"
       models:
+        default: ["amazon/nova-lite-v1", "qwen/qwen-2.5-coder-32b-instruct"]
         fetch: true
       dropParams: ["stop"]
       modelDisplayLabel: "OpenRouter"
