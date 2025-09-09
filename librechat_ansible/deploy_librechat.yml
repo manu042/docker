@@ -1,0 +1,16 @@
+---
+- name: Deploy LibreChat
+  hosts: all
+  vars_files:
+    - vars/main.yml
+    - vars/vault.yml
+
+  tasks:
+    - name: Create LibreChat data directory
+      ansible.builtin.file:
+        path: '{{ project_dir }}'
+        state: directory
+        mode: '0755'
+
+    - import_tasks: tasks/deploy_config_files.yml
+    - import_tasks: tasks/start_docker.yml
