@@ -6,9 +6,9 @@ services:
     container_name: librechat 
     restart: unless-stopped
     env_file:
-      - ./config/.env.librechat
+      - .env.librechat
     volumes:
-      - ./config/librechat.yaml:/app/librechat.yaml:ro
+      - librechat.yaml:/app/librechat.yaml:ro
       - images:/app/client/public/images
     networks:
       - proxy
@@ -32,7 +32,7 @@ services:
     container_name: lc-meilisearch
     restart: unless-stopped
     env_file:
-      - ./config/.env.mlsearch
+      - .env.mlsearch
     volumes:
       - meili_data:/meili_data
     networks:
@@ -43,7 +43,7 @@ services:
     restart: unless-stopped
     container_name: lc-vectordb
     env_file:
-      - ./config/.env.vdb
+      - .env.vdb
     volumes:
         - pgdata2:/var/lib/postgresql/data
     networks:
@@ -54,7 +54,7 @@ services:
     container_name: lc-rag-api
     restart: unless-stopped
     env_file:
-      - ./config/.env.rag_api
+      - .env.rag_api
     depends_on:
       - vectordb
     networks:
