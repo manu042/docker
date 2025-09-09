@@ -15,8 +15,3 @@
     project_src: '{{ project_dir }}'
     remove_orphans: true
     state: present
-  register: compose_result
-
-- name: Show docker compose result
-  ansible.builtin.debug:
-    var: compose_result
