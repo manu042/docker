@@ -1,0 +1,19 @@
+# For more information, see the Configuration Guide:
+# https://www.librechat.ai/docs/configuration/librechat_yaml
+
+# Configuration version (required)
+version: 1.2.1
+
+# Cache settings: Set to true to enable caching
+cache: false
+
+endpoints:
+  custom:
+    # OpenRouter
+    - name: "OpenRouter"
+      apiKey: '{{ openrouter_api_key }}'
+      baseURL: "https://openrouter.ai/api/v1"
+      models:
+        fetch: true
+      dropParams: ["stop"]
+      modelDisplayLabel: "OpenRouter"
