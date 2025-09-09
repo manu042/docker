@@ -1,4 +1,15 @@
 ---
+- name: Check if proxy network exists
+  community.docker.docker_network_info:
+    name: proxy
+  register: proxy_network_info
+
+- name: Create proxy network if it does not exist
+  community.docker.docker_network:
+    name: proxy
+    state: present
+  when: not proxy_network_info.network
+
 - name: Start Services
   community.docker.docker_compose_v2:
     project_src: '{{ project_dir }}'
@@ -8,4 +19,4 @@
 
 - name: Show docker compose result
   ansible.builtin.debug:
-    var: compose_output.stdout
+    var: compose_result
