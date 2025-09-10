@@ -1,0 +1,7 @@
+tls:
+  options:
+    mtls:
+      clientAuth:
+        caFiles:
+          - "/etc/ssl/private/ca.pem"
+        clientAuthType: "RequireAndVerifyClientCert"

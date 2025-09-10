@@ -1,0 +1,50 @@
+theme: light
+
+server:
+  address: '0.0.0.0:9091'
+
+log:
+  level: info
+
+totp:
+  issuer: example.com
+
+authentication_backend:
+  file:
+    path: /config/users_database.yml
+  password_reset:
+    disable: true
+
+storage:
+  encryption_key: "xxxxxxxxxxxxxxxx"
+  local:
+    path: /config/db.sqlite3
+
+notifier:
+  filesystem:
+    filename: /config/notification.txt
+
+session:
+  name: 'authelia_session'
+  same_site: 'lax'
+  inactivity: '1d'
+  expiration: '7d'
+  remember_me: '1M'
+  cookies:
+    - domain: 'example.com'
+      authelia_url: 'https://auth.example.com'
+      same_site: 'lax'
+      inactivity: '1d'
+      expiration: '7d'
+      remember_me: '14d'
+
+access_control:
+  default_policy: deny
+  rules:
+    - domain:
+        - "traefik.example.com"
+      policy: two_factor
+
+    - domain: 
+        - "*.example.com"
+      policy: one_factor

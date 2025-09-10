@@ -1,0 +1,75 @@
+services:
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
+    depends_on:
+      - docker-socket-proxy
+      - authelia
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - letsencrypt:/letsencrypt
+      - /etc/ssl/private/ca.pem:/etc/ssl/private/ca.pem
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml
+      - ./traefik/tls-options.yml:/etc/traefik/dynamic_conf/tls-options.yml
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.example.com`)"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.traefik.middlewares=authelia@docker"
+      - "traefik.http.routers.traefik.service=api@internal"
+
+      # Authelia forward-auth middleware
+      - "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://auth.example.com/"
+      - "traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email"
+
+  authelia:
+    image: authelia/authelia:latest
+    container_name: authelia
+    volumes:
+      - ./authelia:/config
+    environment:
+      - TZ=Europe/Berlin
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.authelia.rule=Host(`auth.example.com`)"
+      - "traefik.http.routers.authelia.entrypoints=websecure"
+      - "traefik.http.routers.authelia.tls.certresolver=letsencrypt"
+      - "traefik.http.services.authelia.loadbalancer.server.port=9091"
+
+  docker-socket-proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    container_name: docker-socket-proxy
+    restart: unless-stopped
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - LOG_LEVEL=info  # Set logging level
+      - CONTAINERS=1    # Allow listing and managing containers
+      - SERVICES=1      # Allow listing and managing services
+      - NETWORKS=1      # Allow listing networks
+      - VOLUMES=1       # Allow listing volumes
+      - EXEC=0          # Disable exec command for security
+      - SYSTEM=0        # Block system-level API access
+      - TIMEOUT_CONNECT=5s
+      - TIMEOUT_CLIENT=10s
+      - TIMEOUT_SERVER=10s
+
+
+volumes:
+  letsencrypt:
+
+
+networks:
+  proxy:
+    external: true
+    name: proxy 
