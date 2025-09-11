@@ -7,8 +7,9 @@ services:
     restart: unless-stopped
     env_file:
       - .env.librechat
+      - .env.librechat.ovr
     volumes:
-      - librechat.yaml:/app/librechat.yaml:ro
+      - ./librechat.yaml:/app/librechat.yaml:ro
       - images:/app/client/public/images
     networks:
       - proxy
