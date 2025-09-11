@@ -2,6 +2,23 @@
 For details on configuring services in Docker Compose, check out https://docs.docker.com/reference/compose-file/services/
 
 
+## Server Setup
+
+### Create a new user
+```bash
+./scripts/create_user.sh <remote_host> <remote_admin_user> <new_username> ~/.ssh/id_rsa.pub
+```
+
+### SSH Config
+```bash
+ansible-playbook -i inventory.yml --ask-become-pass playbooks/ssh_config.yml
+```
+
+### Install Docker
+```bash
+ansible-playbook -i inventory.yml --ask-become-pass playbooks/install_docker.yml
+```
+
 
 ## Docker commands
 List Docker containers in a more readable format:
@@ -10,18 +27,15 @@ $ docker ps --format "table {{.ID}}\t{{.Status}}\t{{.Ports}}\t{{.Names}}"
 ```
 Refer to https://docs.docker.com/go/formatting/ for more information about formatting
 
-
 Remove all stopped containers:
 ```shell
 $ docker container prune
 ```
 
-
 Monitor container resource usage:
 ```shell
 $ docker stats
 ```
-
 
 Use environment variables with Docker Compose:
 ```shell
@@ -36,18 +50,4 @@ Show Docker image layers:
 $ docker history [image_name:tag]
 
 $ docker history lscr.io/linuxserver/code-server:latest --format "table{{.CreatedBy}}\t{{.Size}}"
-```
-
-
-## Docker Log Rotation
-Add this to `/etc/docker/daemon.json` to configure the Docker daemon to use log rotation by default.
-
-```Json
-{
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "10m",
-    "max-file": "3",
-  }
-}
 ```
