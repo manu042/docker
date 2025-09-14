@@ -1,0 +1,26 @@
+name: "code-server"
+
+services:
+  code-server:
+    image: code-server
+    build: .
+    container_name: code-server
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./coder_data:/home/coder
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.code.rule=Host(`coder.example.com`)"
+      - "traefik.http.routers.code.entrypoints=websecure"
+      - "traefik.http.routers.code.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.code.tls.options=mtls@file"
+      - "traefik.http.services.code.loadbalancer.server.port=8080"
+
+networks:
+  proxy:
+    external: true
+    name: proxy
