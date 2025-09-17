@@ -1,5 +1,5 @@
 ---
-project_dir: '/home/{{ ansible_user }}/librechat'
+project_dir: '/home/{{ ansible_user }}/projects/librechat'
 
 images:
   librechat: ghcr.io/danny-avila/librechat-dev-api:latest
