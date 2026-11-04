@@ -1,0 +1,36 @@
+name: agentbox
+
+services:
+  agentbox:
+    image: agentbox
+    build:
+      context: .
+      args:
+        UID: ${HOST_UID:-1000}
+        GID: ${HOST_GID:-1000}
+        NODE_MAJOR: ${NODE_MAJOR:-24}
+    container_name: agentbox
+    restart: unless-stopped
+    env_file:
+      - .env
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    working_dir: /Projects
+    volumes:
+      - ~/Projects:/Projects
+      - claude:/home/dev/.claude
+      - pi:/home/dev/.pi
+      - cache:/home/dev/.cache
+      - npm:/home/dev/.npm
+      - cargo-registry:/home/dev/.cargo/registry
+      - cargo-git:/home/dev/.cargo/git
+
+volumes:
+  claude:
+  pi:
+  cache:
+  npm:
+  cargo-registry:
+  cargo-git:
