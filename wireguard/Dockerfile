@@ -1,4 +1,4 @@
-FROM ubuntu:25.04
+FROM ubuntu:26.04
 
 
 # ==== Set a non-interactive frontend to avoid prompts during installation ====
@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # ==== Update and install necessary packages ====
 RUN apt-get update && apt-get install -y --no-install-recommends \
     dnsmasq \
-    dnsutils \
+    bind9-dnsutils \
     iproute2 \
     iptables \
     net-tools \
@@ -18,10 +18,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     # apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-# Enable IPv4 forwarding
-# and create a backup of dnsmasq.conf
-RUN echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf && sysctl -p && \
-    cp /etc/dnsmasq.conf /etc/dnsmasq.conf.backup
+# Create a backup of dnsmasq.conf
+# (IPv4 forwarding is enabled at runtime via "sysctls" in docker-compose.yml)
+RUN cp /etc/dnsmasq.conf /etc/dnsmasq.conf.backup
 
 
 # ==== Copy the dnsmasq config files ====

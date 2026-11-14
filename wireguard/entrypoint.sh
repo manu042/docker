@@ -12,8 +12,11 @@ fi
 echo "Starting WireGuard..."
 wg-quick up wg0
 
-dnsmasq -k
+# Run dnsmasq in the foreground as the main process.
+# It keeps the container alive and receives the stop signal directly.
+echo "WireGuard is running. Starting dnsmasq..."
+exec dnsmasq -k
 
-# Keep the container running (tail a log file or a dummy process)
-echo "WireGuard is running. Keeping the container alive..."
-tail -f /dev/null
+# Alternative without dnsmasq: keep the container running with a dummy process
+# echo "WireGuard is running. Keeping the container alive..."
+# tail -f /dev/null
