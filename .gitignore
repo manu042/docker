@@ -2,3 +2,4 @@
 .ansible
 inventory.yml
 vault.yml
+.env
